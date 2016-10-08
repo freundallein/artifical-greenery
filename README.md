@@ -1,4 +1,4 @@
-# artifical-greenery
+# artificial-greenery
 UPDATE.
 Destop version is not good enough if you RPi doesn't have some touchscreen,
 
