@@ -175,7 +175,7 @@ def manual_switch(func, controls):
         switching_fan(True, controls)
 
 
-def shutdown(GPIO):
+def shutdown():
     GPIO.cleanup()
     sys.exit()
 
@@ -195,4 +195,4 @@ print('Started AGC Server')
 agc_thread.join()
 server_thread.join()
 
-shutdown(GPIO)
+shutdown()
