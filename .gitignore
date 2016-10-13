@@ -1,3 +1,4 @@
 Adafruit_Python_DHT-master
 Old
-
+.gitignore
+.idea

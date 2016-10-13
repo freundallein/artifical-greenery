@@ -50,17 +50,10 @@ class Status():
 
 
 class Controls():
-    def setLightStatus(self, a):
-        self.light_status = bool(a)
-
-    def setFanStatus(self, a):
-        self.fan_status = bool(a)
-
-    def setAutoControl(self, a):
-        self.autocontrol = bool(a)
-
-    def setWorking(self, a):
-        self.working = bool(a)
+    self.light_status = False
+    self.fan_status = False
+    self.autocontrol = True
+    self.working = True
 
 
 def reading_config():
