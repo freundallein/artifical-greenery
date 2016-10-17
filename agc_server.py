@@ -141,12 +141,12 @@ def agc(status, controls, config):
 
 
 def automaticalControl(status, controls, config):
-    if status.getTemperature() > config['max_temperature'] or status.getHumidity() > config['max_humidity']:
+    if status.getTemperature() > int(config['max_temperature']) or status.getHumidity() > int(config['max_humidity']):
         logging.warning('High temperature or humidity')
         logging.warning(status.getTemperature())
         logging.warning(status.getHumidity())
         switching_fan(True, controls)
-    elif status.getTemperature() <= (int(config['max_temperature']) - 2):
+    elif status.getTemperature() <= (int(config['max_temperature']) - 2) and status.getHumidity()<= (int(config['max_humidity'])-5):
         switching_fan(False, controls)
 
     if config['morning_time'] <= status.checkServerTime() <= config['evening_time']:
@@ -186,7 +186,7 @@ def server(status, controls):
     while controls.getWorkingFlag():
         try:
             conn, addr = sock.accept()
-            print('connected:', addr)
+            print('Address connected:', addr)
             logging.info('')
             conn.send('Connected to AGC.')
             while controls.getWorkingFlag():
