@@ -44,7 +44,7 @@ def time_check_for_write():
 
 
 def time_check_for_read():
-    if re.search(r'12:15s:00', time.strftime('%H:%M:%S')):
+    if re.search(r'12:15:00', time.strftime('%H:%M:%S')):
         return True
 
 
