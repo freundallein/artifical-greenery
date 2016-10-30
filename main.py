@@ -4,14 +4,13 @@
 
 from AGServer import *
 from DBMaintenance import *
-from AGControl import *
 from AGTelebot import *
+from AGControl import *
 
 import threading
 import sys
 
 def shutdown():
-    controls.set_working_flag(False)
     GPIO.cleanup()
     sys.exit()
 
@@ -44,7 +43,5 @@ def main():
 
 
 if __name__ == '__main__':
-    try:
-        main()
-    except KeyboardInterrupt:
-        shutdown()
+    main()
+

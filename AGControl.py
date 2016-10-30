@@ -36,7 +36,7 @@ def reading_config():
         config_line = config_file.read().split('\n')
         config = {}
         for i in range(len(config_line)):
-            if ('[' in config_line[i]) or (not config_line[i]):
+            if ((('[' and']') or '#') in config_line[i]) or (not config_line[i]):
                 pass
             else:
                 parts = config_line[i].split(' = ')
@@ -56,6 +56,12 @@ def reading_config():
         file.write('morning_time = 08:00' + '\n')
         file.write('evening_time = 21:00' + '\n')
         file.write('autocontrol = 1' + '\n')
+        file.write('[Database Mailing configuration]' + '\n')
+        file.write('smtp_server =  smtp.gmail.com' + '\n')
+        file.write('smtp_port =  587' + '\n')
+        file.write('agc_mail = ' + '\n')
+        file.write('agc_mail_pass =  ' + '\n')
+        file.write('recieve_mail =  ' + '\n')
         file.close()
         print('Config complete. Please, restart.')
         logging.info('Config complete')
@@ -156,7 +162,7 @@ def automatical_control():
         logging.warning('High humidity: %i', status.get_humidity())
         switching_fan(True)
 
-    elif status.get_temperature() <= (controls.get_max_temperature() - 2) and status.get_humidity() <= (
+    elif status.get_temperature() <= (controls.get_max_temperature() - 5) and status.get_humidity() <= (
                 controls.get_max_humidity() - 5):
         switching_fan(False)
 
@@ -186,3 +192,23 @@ def switching_fan(boolean):
         GPIO.output(fan_pin, True)
         controls.set_fan_status(False)
         logging.info('Fan OFF')
+
+
+# Function for switching mechs by server
+def manual_switch(func):
+    controls.set_autocontrol_flag(False)
+    print('Automatical Control OFF')
+
+    if func == 'light':
+        switching_light(not controls.get_light_status())
+
+    if func == 'fan':
+        switching_fan(not controls.get_fan_status())
+
+
+def get_status():
+    status_msg = '***Artificial Greenery*** \nHumidity = ' + str(status.get_humidity()) + '\n' + 'Temperature = ' + str(
+        status.get_temperature()) + '\n' + 'Lights = ' + str(
+        controls.get_light_status()) + '\n' + 'Fan = ' + str(controls.get_fan_status()) + '\n' + 'Autocontrol = ' + str(
+                     controls.get_autocontrol_flag())
+    return status_msg

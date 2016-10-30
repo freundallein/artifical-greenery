@@ -19,8 +19,7 @@ def server():
                     print('Address connected:', addr)
                     logging.info('Address connected: %s', addr)
                     while controls.get_working_flag():
-                        conn.send(form_status_string().encode())
-
+                        conn.send(get_status().encode())
                         command = conn.recv(4096)
                         print(command)
                         if command.decode() == '2':
@@ -52,21 +51,3 @@ def server():
             print(error)
             logging.error(error)
             time.sleep(10)
-
-
-def form_status_string():
-    status_string = str(status.get_humidity()) + ',' + str(status.get_temperature()) + ',' + str(
-        controls.get_light_status()) + ',' + str(controls.get_fan_status()) + ',' + str(controls.get_autocontrol_flag())
-    return status_string
-
-
-# Function for switching mechs by server
-def manual_switch(func):
-    controls.set_autocontrol_flag(False)
-    print('Automatical Control OFF')
-
-    if func == 'light':
-        switching_light(not controls.get_light_status())
-
-    if func == 'fan':
-        switching_fan(not controls.get_fan_status())

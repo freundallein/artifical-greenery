@@ -20,14 +20,6 @@ while responding:
     # status_tuple=data.split(', ')
     os.system('clear')
     print(data)
-
-    ''' sys.stdout.write(
-        "\rHumidity = {0}, Temperature = {1}, Light = {2}, Fan = {3}, Autocontrol = {4}".format(*status_tuple))
-    sys.stdout.write(
-        '\nFunctions: \n1 - exit, \n2 - switch light(manually), \n3 - switch fan(manually), \n4 - turn on Autocontrol, \n9 - shutdown AGC.\n...  ')
-    sys.stdout.flush()'''
-
-    time.sleep(3)
     command = str(input())
     if command == '1':
         sock.close()
