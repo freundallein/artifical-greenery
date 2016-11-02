@@ -11,7 +11,8 @@ PostgreSQL is running on virtual machine, write and read through the Internet.
 
 Can send daily reports, also have telegram bot for remote control.
 
-
 Use Adafruit_DHT lib for reading sensor data from DHT-sensor, psycopg2 for woking with PostgreSQL.
+
+Run main.py for start.
 
 
