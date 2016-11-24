@@ -1,7 +1,6 @@
-from AGControl import *
-
 import socket
-import time
+
+from package.AGControl import *
 
 
 # Function for manual controlling by client
@@ -10,7 +9,7 @@ def server():
         try:
             sock = socket.socket()
             sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            sock.bind(('', 14880))
+            sock.bind(('', config.server_port))
             sock.listen(2)
             while controls.get_working_flag():
                 try:
@@ -30,8 +29,8 @@ def server():
                             logging.info('Fan switched by: %s', addr)
                         elif command.decode() == '4':
                             controls.set_autocontrol_flag(True)
-                            print('Automatical control ON')
-                            logging.info('Automatical control ON by: %s', addr)
+                            print('Automatic control ON')
+                            logging.info('Automatic control ON by: %s', addr)
                         elif command.decode() == '9':
                             controls.set_working_flag(False)
                             print('Shutdown by', addr)

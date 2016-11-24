@@ -1,14 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
-from AGServer import *
-from DBMaintenance import *
-from AGTelebot import *
-from AGControl import *
-
-import threading
+import RPi.GPIO as GPIO
 import sys
+import threading
+
+from package.AGControl import agc
+from package.AGServer import server
+from package.AGTelebot import ag_telebot
+from package.DBMaintenance import db_maintenance
+
 
 def shutdown():
     GPIO.cleanup()
@@ -44,4 +45,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
