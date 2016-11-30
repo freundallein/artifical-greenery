@@ -1,4 +1,4 @@
-# artifical-greenery
+# artificial-greenery
 
 Artificial Greenery is a little handmade greenhouse, made from 2 IKEA boxes, controled by Raspberry Pi with Raspbian on board.
 
