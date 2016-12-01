@@ -1,12 +1,11 @@
 import telebot
+import sys
 from AGControl import *
 from DBMaintenance import db_reading
 from mail import mail_send
-from main import shutdown
+
 
 bot = telebot.TeleBot(config.TOKEN)
-
-approved_ids = config.approved_users
 
 
 def deny_send(message):
@@ -37,7 +36,7 @@ def tb_status(message):
 
 @bot.message_handler(commands=['light'])
 def tb_switchlight(message):
-    if message.from_user.id in approved_ids:
+    if message.from_user.id in config.approved_users:
         manual_switch('light')
         bot.send_message(message.chat.id, 'Lights switched, Autocontrol turned OFF')
         bot.send_message(message.chat.id, get_status())
@@ -47,7 +46,7 @@ def tb_switchlight(message):
 
 @bot.message_handler(commands=['fan'])
 def tb_switchfan(message):
-    if message.from_user.id in approved_ids:
+    if message.from_user.id in config.approved_users:
         manual_switch('fan')
         bot.send_message(message.chat.id, 'Fan switched, Autocontrol turned OFF')
         bot.send_message(message.chat.id, get_status())
@@ -57,7 +56,7 @@ def tb_switchfan(message):
 
 @bot.message_handler(commands=['autocontrol'])
 def tb_switchfan(message):
-    if message.from_user.id in approved_ids:
+    if message.from_user.id in config.approved_users:
         controls.set_autocontrol_flag(True)
         bot.reply_to(message, "Autocontrol turned ON")
         bot.send_message(message.chat.id, get_status())
@@ -67,7 +66,7 @@ def tb_switchfan(message):
 
 @bot.message_handler(commands=['report'])
 def tb_status(message):
-    if message.from_user.id in approved_ids:
+    if message.from_user.id in config.approved_users:
         mail_send(db_reading())
         bot.send_message(message.chat.id, "Daily report sent.")
     else:
@@ -75,10 +74,37 @@ def tb_status(message):
 
 
 @bot.message_handler(commands=['shutdown'])
-def tb_status(message):
-    if message.from_user.id in approved_ids:
+def shutdown_by_tb(message):
+    if message.from_user.id in config.approved_users:
         bot.send_message(message.chat.id, "AG shutdown executed.")
-        shutdown()
+        GPIO.cleanup()
+        sys.exit()
+    else:
+        deny_send(message)
+
+
+@bot.message_handler(commands=['add'])
+def add_user(message):
+    if message.from_user.id == config.administrator_id:
+        try:
+            id_to_add = int(telebot.util.extract_arguments(message.text))
+            config.approved_users.append(id_to_add)
+            bot.send_message(message.chat.id, "approved.")
+        except ValueError:
+            bot.send_message(message.chat.id, "ID must be integer.")
+    else:
+        deny_send(message)
+
+
+@bot.message_handler(commands=['delete'])
+def delete_user(message):
+    if message.from_user.id == config.administrator_id:
+        try:
+            id_to_delete = int(telebot.util.extract_arguments(message.text))
+            config.approved_users.remove(id_to_delete)
+            bot.send_message(message.chat.id, "deleted.")
+        except ValueError:
+            bot.send_message(message.chat.id, "ID must be integer.")
     else:
         deny_send(message)
 
