@@ -1,18 +1,29 @@
-# artifical-greenery
-
-Client-server app for control artificial greenery.
+# artificial-greenery
 
 Artificial Greenery is a little handmade greenhouse, made from 2 IKEA boxes, controled by Raspberry Pi with Raspbian on board.
 
-Server can check temperature and humidity with DHT_11 sensor, switch lights and/or fan, depends on sensor data and daytime;
-sending status, recieving commands from simple client, writing log_file.
-
+Artificial Greenery can:
+- check temperature and humidity with DHT_11 sensor
+- switch lights and/or fan, depends on sensor data and daytime
+- send status
+- mail daily report 
+- recieve commands from simple client
+- write log_file
+- save data to SQL Satabase
+- be controled by mobile phone using Telegram.
 PostgreSQL is running on virtual machine, write and read through the Internet.
 
-Can send daily reports, also have telegram bot for remote control.
+For proper work you will nedd to install libraries:
+```
+Adafruit_DHT
+RPi.GPIO
+psycopg2
+telebot
+```
 
-Use Adafruit_DHT lib for reading sensor data from DHT-sensor, psycopg2 for woking with PostgreSQL.
+Run main.py for start (should be root for GPIO).
 
-Run main.py for start.
+For any questions contact:
+- freund.allein@gmail.com
 
 
