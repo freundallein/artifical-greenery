@@ -11,9 +11,10 @@ Artificial Greenery can:
 - write log_file
 - save data to SQL Satabase
 - be controled by mobile phone using Telegram.
+
 PostgreSQL is running on virtual machine, write and read through the Internet.
 
-For proper work you will nedd to install libraries:
+For proper work you will need to install libraries:
 ```
 Adafruit_DHT
 RPi.GPIO
