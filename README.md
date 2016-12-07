@@ -9,7 +9,7 @@ Artificial Greenery can:
 - mail daily report 
 - recieve commands from simple client
 - write log_file
-- save data to SQL Satabase
+- save data to SQL Database
 - be controled by mobile phone using Telegram.
 
 PostgreSQL is running on virtual machine, write and read through the Internet.
