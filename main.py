@@ -4,6 +4,7 @@
 import RPi.GPIO as GPIO
 import sys
 import threading
+import os
 
 from package.AGControl import agc
 from package.AGServer import server
@@ -44,4 +45,6 @@ def main():
 
 
 if __name__ == '__main__':
+    if not os.path.exists('log'):
+        os.makedirs('log')
     main()

@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 import Adafruit_DHT
 import logging
+import time
 
 ###########################
 # [Control configuration]#
@@ -52,7 +53,8 @@ DHT_pin = '14'  # Means BCM.GPIO14 (GPIO.BOARD - 8)
 ###########################
 # [Logging configuration]#
 
-logging.basicConfig(filename='agc_server.log',
+logfile = 'log/agc_' + time.strftime('%d_%m') + '.log'
+logging.basicConfig(filename=logfile,
                     format=u'%(filename)s[LINE:%(lineno)d]# %(levelname)-8s [%(asctime)s]  %(message)s',
                     level=logging.INFO)
 
