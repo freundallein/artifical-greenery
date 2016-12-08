@@ -1,5 +1,6 @@
 import telebot
-import sys
+
+import os
 from AGControl import *
 from DBMaintenance import db_reading
 from mail import mail_send
@@ -19,6 +20,7 @@ def command_help(message):
     markup = telebot.types.ReplyKeyboardMarkup()
     markup.row('/status', '/autocontrol')
     markup.row('/light', '/fan')
+    markup.row('/photo')
     markup.row('/report', '/shutdown')
     help_msg = '''Commands: \n/status - for checking AG status,\n
                 /light - for switching lights,\n
@@ -55,7 +57,7 @@ def tb_switchfan(message):
 
 
 @bot.message_handler(commands=['autocontrol'])
-def tb_switchfan(message):
+def tb_autocontrol(message):
     if message.from_user.id in config.approved_users:
         controls.set_autocontrol_flag(True)
         bot.reply_to(message, "Autocontrol turned ON")
@@ -77,8 +79,7 @@ def tb_status(message):
 def shutdown_by_tb(message):
     if message.from_user.id in config.approved_users:
         bot.send_message(message.chat.id, "AG shutdown executed.")
-        GPIO.cleanup()
-        sys.exit()
+        shutdown()
     else:
         deny_send(message)
 
@@ -107,6 +108,18 @@ def delete_user(message):
             bot.send_message(message.chat.id, "ID must be integer.")
     else:
         deny_send(message)
+
+@bot.message_handler(commands=['photo'])
+def tb_status(message):
+    if message.from_user.id in config.approved_users:
+        filename = 'img/image' + time.strftime('%d-%m_%H.%M.%S') + '.png'
+        command='fswebcam -r 800x600 '+ filename
+        os.system(command)
+        photo = open(filename, 'rb')
+        bot.send_photo(message.chat.id, photo)
+    else:
+        deny_send(message)
+
 
 
 def ag_telebot():

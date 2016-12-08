@@ -1,10 +1,11 @@
 import logging
 import time
+import sys
 
 import Adafruit_DHT
 import RPi.GPIO as GPIO
 
-from package import config
+import config
 
 
 class Status:
@@ -144,6 +145,11 @@ def get_status():
         controls.get_autocontrol_flag())
     return status_msg
 
+
+def shutdown():
+    controls.set_working_flag(False)
+    GPIO.cleanup()
+    sys.exit()
 
 status = Status()
 controls = Controls()

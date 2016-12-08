@@ -1,20 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import RPi.GPIO as GPIO
-import sys
 import threading
 import os
 
-from package.AGControl import agc
+from package.AGControl import agc, shutdown
 from package.AGServer import server
 from package.AGTelebot import ag_telebot
 from package.DBMaintenance import db_maintenance
 
 
-def shutdown():
-    GPIO.cleanup()
-    sys.exit()
 
 
 def main():
@@ -41,10 +36,15 @@ def main():
     db_thread.join()
     tb_thread.join()
 
-    shutdown()
 
 
 if __name__ == '__main__':
     if not os.path.exists('log'):
         os.makedirs('log')
-    main()
+    if not os.path.exists('img'):
+        os.makedirs('img')
+    try:
+        main()
+        shutdown()
+    except KeyboardInterrupt:
+        shutdown()
