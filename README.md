@@ -1,6 +1,6 @@
 # artificial-greenery
 UPDATE.
-Destop version is not good enough if you RPi doesn't have some touchscreen,
+Desctop version is not good enough if you RPi doesn't have some touchscreen,
 
 so csver branch introduces client-server version of Artificial greenery Control.
 
